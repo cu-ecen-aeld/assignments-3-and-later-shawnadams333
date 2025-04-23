@@ -13,6 +13,12 @@ fi
 writefile=$1
 writestr=$2
 
+dir=$(dirname $writefile)
+
+if [[ ! -e $dir ]]; then
+    mkdir -p $(dirname $writefile)
+fi
+
 echo $writestr > $writefile
 
 if [[ ! -e $writefile ]]; then

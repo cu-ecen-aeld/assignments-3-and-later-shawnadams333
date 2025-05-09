@@ -28,8 +28,8 @@ int processArgs(int argc, char *argv[])
     else
     {
         printf("argv[1]: %s, argv[2]: %s\n", argv[1], argv[2]);
-        string = argv[1];
-        filename = argv[2];
+        filename = argv[1];
+        string = argv[2];
         printf("string: %s, filename: %s\n", string, filename);
         syslog(LOG_DEBUG, "string: %s, filename: %s\n", string, filename);
     }

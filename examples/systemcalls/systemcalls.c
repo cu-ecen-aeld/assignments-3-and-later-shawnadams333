@@ -140,13 +140,8 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
         command[i] = va_arg(args, char *);
     }
     command[count] = NULL;
-    // this line is to avoid a compile warning before your implementation is complete
-    // and may be removed
-    command[count] = command[count];
-
 
 /*
- * TODO
  *   Call execv, but first using https://stackoverflow.com/a/13784315/1446624 as a refernce,
  *   redirect standard out to a file specified by outputfile.
  *   The rest of the behaviour is same as do_exec()
@@ -157,11 +152,9 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
     int fd = open(outputfile, O_WRONLY|O_TRUNC|O_CREAT, 0644);
 
     if (fd < 0) {
-        printf("Error opening file: %s: %d\n", outputfile, errno);
         retval = false;
     }
     if (dup2(fd, 1) < 0) {
-        printf("Error redirecting stdout: %d\n", errno);
         retval = false;
     }
 
@@ -169,19 +162,15 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
 
     pid_t pid = fork();
 
-    printf("\n");
-
     if (pid == -1) {
         retval = false;
     }
     else if (pid == 0) {
         /* child process */
         char** const ptr_to_const_arr = &command[0];
-        printf("child: running %s\n", command[0]);
         rc = execv(command[0], ptr_to_const_arr);
 
         /* we only get here if there was an error in execv() */
-        printf("child: execv() error %d, errno: %d\n", (int)rc, errno);
         exit(rc);
     }
 
@@ -189,17 +178,10 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
     int status = 0;
     rc = waitpid(pid, &status, 0);
 
-    printf("parent: waitpid() returned %d\n", (int)rc);
-    printf("parent: status: %x\n", status);
-    printf("parent: wifexited(status): %x\n", (int)WIFEXITED(status));
-    printf("parent: wexitstatus(status): %x\n", (int)WEXITSTATUS(status));
-
     if (rc < 0) {
-        printf("waitpid() returned an error\n");
         retval = false;
     }
     else if (WEXITSTATUS(status) != 0) {
-        printf("parent: child exit status: %d\n", WEXITSTATUS(status));
         retval = false;
     }
 

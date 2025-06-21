@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 usage_and_exit() {
     echo "USAGE: $0 <directory-to-search> <search-string>"
@@ -22,7 +22,7 @@ counts=$(find $filesdir -type f -exec grep -c $searchstr {} \;)
 num_files=0
 num_matches=0
 for count in $counts; do
-    ((num_files++))
+    num_files=$((num_files + 1))
     num_matches=$((num_matches + $count))
 done
 

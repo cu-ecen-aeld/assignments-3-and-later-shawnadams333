@@ -99,7 +99,7 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
-TOOLCHAIN_INSTALL=/opt/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/
+TOOLCHAIN_INSTALL=$(dirname $(dirname $(which ${CROSS_COMPILE}readelf)))
 cp ${TOOLCHAIN_INSTALL}/aarch64-none-linux-gnu/libc/lib/ld-linux-aarch64.so.1 lib
 cp ${TOOLCHAIN_INSTALL}/aarch64-none-linux-gnu/libc/lib64/libm.so.6 lib64
 cp ${TOOLCHAIN_INSTALL}/aarch64-none-linux-gnu/libc/lib64/libresolv.so.2 lib64

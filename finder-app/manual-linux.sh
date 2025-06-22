@@ -110,7 +110,7 @@ sudo mknod -m 666 dev/null c 1 3
 sudo mknod -m 666 dev/console c 5 1
 
 # TODO: Clean and build the writer utility
-pushd $HOME/repos/coursera/sys-prog/assignment-1-shawnadams333/finder-app
+cd ${FINDER_APP_DIR}
 make clean
 make CROSS_COMPILE=${CROSS_COMPILE}
 
@@ -122,7 +122,6 @@ cp finder-test.sh ${OUTDIR}/rootfs/home
 cp autorun-qemu.sh ${OUTDIR}/rootfs/home
 cp conf/assignment.txt ${OUTDIR}/rootfs/home/conf
 cp conf/username.txt ${OUTDIR}/rootfs/home/conf
-popd
 
 # TODO: Chown the root directory
 # handled in the cpio command?
